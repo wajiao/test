@@ -6,24 +6,52 @@ class DetailView extends React.Component {
   constructor(props) {
     super(...arguments)
     this.state = {
+      obj:{
+        'id':1,'name':"aj",'email':"123@.com"
+      },
+      watch:"off",
+      style:{"display":"none"}
     }
   }
   createList(){
+    let obj = this.state.obj;
+    console.log(obj)
 
+    return (
+        <div style = {this.state.style}>
+        <div>id:{obj.id}</div>
+        <div>name:{obj.name}</div>
+        <div>email:{obj.email}</div>
+        </div>
+      )
+  }
+  showChild(){
+    let style = this.state.style;
+    if(this.state.watch==="off"){
+      style = {"display":"none"};
+      this.setState({watch:"on",style:style})
+    }else if(this.state.watch==="on") {
+      style = {"display":"block"};
+      this.setState({watch:"off",style:style})
+    }
   }
   render () {
-    console.log(this.props.match.params.id)
     return (
       <div>
-        <h1>detail</h1>
+        <button onClick = {this.showChild.bind(this)}>detail</button>
+        {this.createList()}
       </div>
     )
   }
   componentDidMount(){
-    let id = this.props.match.params.id;
-    this.putAjax("https://www.mxcins.com/api/users/"+id,'',(res)=>{
-      console.log(res)
-    });
+    if(this.props.data=='undefind'){
+      this.setState({obj:{'id':1,'name':"aj",'email':"123@.com"}})
+    }
+
+    // let id = this.props.match.params.id;
+    // this.putAjax("https://www.mxcins.com/api/users/"+id,JSON.stringify({'name':"",'email':''}),(res)=>{
+    //   console.log(res)
+    // });
   }
   putAjax(url,data,callback) {
     $.ajax({

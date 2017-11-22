@@ -1,6 +1,6 @@
 import React from 'react'
 // import PropTypes from 'prop-types'
-
+import DetailView from '../detail'
 class ListView extends React.Component {
   constructor(props) {
     super(...arguments)
@@ -12,12 +12,13 @@ class ListView extends React.Component {
     window.location = "/detail/"+id;
   }
   createList(){
+      // <DetailView data = {obj}></DetailView>
     return this.state.userList.map((obj,index) => {
       return (
         <div key = {index}>
-          <div onClick = {this.gotoDetial.bind(this,obj.id)}>id:{obj.id}</div>
-          <div>name:{obj.name}</div>
-          <div>email:{obj.email}</div>
+          <a onClick = {this.gotoDetial.bind(this,obj.id)}>id:{obj.id}</a>
+          <span>name:{obj.name}</span>
+          <span>email:{obj.email}</span>
         </div>
       )
     })
@@ -30,7 +31,9 @@ class ListView extends React.Component {
     return (
       <div>
         <h1>list</h1>
+
         <button onClick = {this.togoCreate.bind(this)}>create</button>
+
         {this.createList()}
       </div>
     )
